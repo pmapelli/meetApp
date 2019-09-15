@@ -1,4 +1,4 @@
-import './database';
+import './meetapp';
 import express from 'express';
 import routes from './routes';
 
