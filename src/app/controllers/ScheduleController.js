@@ -40,7 +40,7 @@ class ScheduleController {
 
     console.log(req.userId);
 
-    const schedule = await Schedule.create({
+    const { user_id } = await Schedule.create({
       title,
       description,
       location,
@@ -48,7 +48,7 @@ class ScheduleController {
       user_id: req.userId,
     });
 
-    return res.json(schedule);
+    return res.json({ title, description, location, date, user_id });
   }
 
   async index(req, res) {
