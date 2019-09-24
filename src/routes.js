@@ -23,5 +23,6 @@ routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/schedule', ScheduleController.store);
 routes.get('/schedule', ScheduleController.index);
+routes.put('/schedule/:id', ScheduleController.update);
 
 export default routes;

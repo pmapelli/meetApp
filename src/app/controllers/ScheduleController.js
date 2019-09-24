@@ -86,6 +86,46 @@ class ScheduleController {
 
     return res.json(schedules);
   }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      date: Yup.date().required(),
+      title: Yup.string().required(),
+      description: Yup.string().required(),
+      location: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation Fails' });
+    }
+
+    const { banner_id } = req.body;
+
+    const file = await File.findOne({
+      where: { id: banner_id },
+    });
+
+    if (!file) {
+      return res.status(400).json({ error: 'Banner not exists' });
+    }
+
+    console.log(req.params.id);
+
+    const schedule = await Schedule.findOne({
+      where: { id: req.params.id },
+    });
+
+    const {
+      id,
+      date,
+      title,
+      description,
+      location,
+      user_id,
+    } = await schedule.update(req.body);
+
+    return res.json(id, date, title, description, location, banner_id, user_id);
+  }
 }
 
 export default new ScheduleController();
