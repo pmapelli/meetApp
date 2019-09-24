@@ -5,6 +5,9 @@ class Schedule extends Model {
     super.init(
       {
         date: Sequelize.DATE,
+        title: Sequelize.STRING,
+        description: Sequelize.STRING,
+        location: Sequelize.STRING,
         canceled_at: Sequelize.DATE,
         past: {
           type: Sequelize.VIRTUAL,
@@ -12,7 +15,7 @@ class Schedule extends Model {
             return isBefore(this.date, new Date());
           },
         },
-        cacelable: {
+        cancelable: {
           type: Sequelize.VIRTUAL,
           get() {
             return isBefore(new Date(), subHours(this.date, 2));
@@ -29,6 +32,7 @@ class Schedule extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.User, { foreignKey: 'banner_id', as: 'banner' });
   }
 }
 
