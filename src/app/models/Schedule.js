@@ -1,4 +1,5 @@
 import { Model, Sequelize } from 'sequelize';
+import { isBefore, subHours } from 'date-fns';
 
 class Schedule extends Model {
   static init(sequelize) {
@@ -32,7 +33,7 @@ class Schedule extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-    this.belongsTo(models.User, { foreignKey: 'banner_id', as: 'banner' });
+    this.belongsTo(models.File, { foreignKey: 'banner_id', as: 'banner' });
   }
 }
 

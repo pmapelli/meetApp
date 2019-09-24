@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import Schedule from '../models/Schedule';
 import { startOfHour, parseISO, isBefore } from 'date-fns';
+import User from '../models/User';
+import File from '../models/File';
 
 class ScheduleController {
   async store(req, res) {
@@ -47,6 +49,42 @@ class ScheduleController {
     });
 
     return res.json(schedule);
+  }
+
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const schedules = await Schedule.findAll({
+      where: { user_id: req.userId, canceled_at: null },
+      attributes: [
+        'id',
+        'date',
+        'past',
+        'cancelable',
+        'title',
+        'description',
+        'location',
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name'],
+        },
+      ],
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
+    return res.json(schedules);
   }
 }
 

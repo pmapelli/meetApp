@@ -22,5 +22,6 @@ routes.put('/users', UserController.update);
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/schedule', ScheduleController.store);
+routes.get('/schedule', ScheduleController.index);
 
 export default routes;
