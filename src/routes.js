@@ -8,6 +8,7 @@ import SessionController from './app/controllers/SessionController';
 import ScheduleController from './app/controllers/ScheduleController';
 
 import authMiddleware from './app/middlewares/auth';
+import RegistrationController from './app/controllers/RegistrationController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -25,5 +26,7 @@ routes.post('/schedule', ScheduleController.store);
 routes.get('/schedule', ScheduleController.index);
 routes.put('/schedule/:id', ScheduleController.update);
 routes.delete('/schedule/:id', ScheduleController.delete);
+
+routes.post('/registration/:id', RegistrationController.store);
 
 export default routes;

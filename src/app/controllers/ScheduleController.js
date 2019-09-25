@@ -35,7 +35,9 @@ class ScheduleController {
     });
 
     if (checkAvailability) {
-      return res.status(400).json({ error: 'Schedule date is not available' });
+      return res
+        .status(400)
+        .json({ error: 'Scheduling date is not available' });
     }
 
     console.log(req.userId);
@@ -114,7 +116,7 @@ class ScheduleController {
     });
 
     if (!schedule) {
-      return res.status(400).json({ error: 'Schedule not found' });
+      return res.status(400).json({ error: 'Scheduling not found' });
     }
 
     if (isBefore(schedule.date, new Date())) {
