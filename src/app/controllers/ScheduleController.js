@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import Schedule from '../models/Schedule';
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import { startOfHour, parseISO, isBefore, isAfter } from 'date-fns';
 import User from '../models/User';
 import File from '../models/File';
 
@@ -117,6 +117,10 @@ class ScheduleController {
       return res.status(400).json({ error: 'Schedule not found' });
     }
 
+    if (isBefore(schedule.date, new Date())) {
+      return res.status(400).json({ error: 'Scheduling has passed' });
+    }
+
     const {
       id,
       date,
@@ -127,6 +131,24 @@ class ScheduleController {
     } = await schedule.update(req.body);
 
     return res.json(id, date, title, description, location, banner_id, user_id);
+  }
+
+  async delete(req, res) {
+    const schedule = await Schedule.findOne({
+      where: { id: req.params.id, user_id: req.userId },
+    });
+
+    if (!schedule) {
+      return res.status(400).json({ error: 'Scheduling not found' });
+    }
+
+    if (isBefore(schedule.date, new Date())) {
+      return res.status(400).json({ error: 'Scheduling has passed' });
+    }
+
+    await schedule.destroy();
+
+    return res.json('ok');
   }
 }
 
