@@ -109,11 +109,13 @@ class ScheduleController {
       return res.status(400).json({ error: 'Banner not exists' });
     }
 
-    console.log(req.params.id);
-
     const schedule = await Schedule.findOne({
-      where: { id: req.params.id },
+      where: { id: req.params.id, user_id: req.userId },
     });
+
+    if (!schedule) {
+      return res.status(400).json({ error: 'Schedule not found' });
+    }
 
     const {
       id,
