@@ -1,7 +1,7 @@
 # meetApp
 Api desenvolvida em NodeJs para gerenciamento de MeetApps
 
-Features:
+# Features:
 - Cadastro de usuários com Avatar;
 - Edição de usuários
 - Autenticação de usuários utilizando JWT
@@ -10,7 +10,7 @@ Features:
 - Cancelamento de Meetapps;
 - Inscrição em Meetapps;
 
-Extenções utilizadas:
+# Extensões utilizadas:
 - bcryptjs
 - date-fns
 - dotenv
