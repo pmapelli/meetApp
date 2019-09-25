@@ -1,8 +1,19 @@
 import Registration from '../models/Registration';
 import Schedule from '../models/Schedule';
+import User from '../models/User';
+
 class RegistrationController {
   async store(req, res) {
-    const schedule = await Schedule.findOne({ where: { id: req.params.id } });
+    const schedule = await Schedule.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          required: true,
+        },
+      ],
+    });
 
     if (!schedule) {
       return res.status(400).json({ error: 'Scheduling not found' });
@@ -39,6 +50,12 @@ class RegistrationController {
         .status(400)
         .json({ error: "Can't subscribe to two meetups at the same time" });
     }
+
+    await Notification.create({
+      content: `O usuário ${chedule.User.name} se inscreveu para o Meetup: ${schedule.title}`,
+      user: req.userId,
+      schedule: req.params.id,
+    });
 
     const { id, userId, scheduleId } = await Registration.create({
       user_id: req.userId,

@@ -6,9 +6,10 @@ import UserController from './app/controllers/UserController';
 import FileController from './app/controllers/FileController';
 import SessionController from './app/controllers/SessionController';
 import ScheduleController from './app/controllers/ScheduleController';
+import RegistrationController from './app/controllers/RegistrationController';
+import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
-import RegistrationController from './app/controllers/RegistrationController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -28,5 +29,7 @@ routes.put('/schedule/:id', ScheduleController.update);
 routes.delete('/schedule/:id', ScheduleController.delete);
 
 routes.post('/registration/:id', RegistrationController.store);
+
+routes.get('/notification/:id', NotificationController.index);
 
 export default routes;
