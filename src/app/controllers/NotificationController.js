@@ -4,7 +4,7 @@ import Notification from '../schemas/Notification';
 class NotificationController {
   async index(req, res) {
     const schedule = await Schedule.findOne({
-      where: { user_id: req.userId, id: req.paramns.id },
+      where: { user_id: req.userId, id: req.params.id },
     });
 
     if (!schedule) {
@@ -15,12 +15,24 @@ class NotificationController {
 
     const notifications = await Notification.find({
       user: req.userId,
-      schedule: req.paramns.id,
+      schedule: req.params.id,
     })
       .sort({ createdAt: 'desc' })
       .limit(20);
 
+    console.log(notifications);
+
     return res.json(notifications);
+  }
+
+  async update(req, res) {
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { read: true },
+      { new: true }
+    );
+
+    return res.json(notification);
   }
 }
 
