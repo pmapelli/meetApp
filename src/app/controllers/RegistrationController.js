@@ -1,3 +1,4 @@
+import Notification from '../schemas/Notification';
 import Registration from '../models/Registration';
 import Schedule from '../models/Schedule';
 import User from '../models/User';
@@ -31,7 +32,7 @@ class RegistrationController {
       return res.status(400).json({ error: 'Already registered user' });
     }
 
-    const checkDate = Registration.findOne({
+    const checkDate = await Registration.findOne({
       where: { user_id: req.userId },
       include: [
         {
@@ -52,7 +53,7 @@ class RegistrationController {
     }
 
     await Notification.create({
-      content: `O usuário ${chedule.User.name} se inscreveu para o Meetup: ${schedule.title}`,
+      content: `O usuário ${schedule.user.name} se inscreveu para o Meetup: ${schedule.title}`,
       user: req.userId,
       schedule: req.params.id,
     });
@@ -63,8 +64,6 @@ class RegistrationController {
     });
 
     return res.json(id, userId, scheduleId);
-
-    // return res.json('Ok');
   }
 }
 
