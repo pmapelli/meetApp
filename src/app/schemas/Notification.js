@@ -10,6 +10,10 @@ const NotificationSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    schedule: {
+      type: Number,
+      required: true,
+    },
     read: {
       type: Boolean,
       required: true,
