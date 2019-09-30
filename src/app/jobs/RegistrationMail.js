@@ -6,17 +6,19 @@ class RegistrationMail {
   }
 
   async handle({ data }) {
-    const { registration, quantity } = data;
+    const { registrationMail, count } = data;
+
+    console.log(process.env.REDIS_PORT);
 
     await Mail.sendMail({
-      to: `${registration.schedule.user.name} <${registration.schedule.user.email}>`,
+      to: `${registrationMail.schedule.user.name} <${registrationMail.schedule.user.email}>`,
       subject: 'Novo inscrito Meetup',
       template: 'registration',
       context: {
-        owner: registration.schedule.user.name,
-        user: registration.user.name,
-        event: registration.schedule.title,
-        quantity,
+        owner: registrationMail.schedule.user.name,
+        user: registrationMail.user.name,
+        event: registrationMail.schedule.title,
+        count,
       },
     });
   }
