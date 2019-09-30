@@ -30,6 +30,7 @@ routes.put('/schedules/:id', ScheduleController.update);
 routes.delete('/schedules/:id', ScheduleController.delete);
 
 routes.post('/registrations/:id', RegistrationController.store);
+routes.get('/registrations/', RegistrationController.index);
 
 routes.get('/notifications/:id', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);

@@ -5,7 +5,6 @@ import User from '../models/User';
 
 import RegistrationMail from '../jobs/RegistrationMail';
 import Queue from '../../lib/Queue';
-import { scheduled } from 'rxjs';
 
 class RegistrationController {
   async store(req, res) {
@@ -101,6 +100,29 @@ class RegistrationController {
     });
 
     return res.json(id, userId, scheduleId);
+  }
+
+  async index(req, res) {
+    const registrations = await Registration.findAll({
+      where: { user_id: req.userId },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+      include: [
+        {
+          model: Schedule,
+          as: 'schedule',
+          attributes: ['id', 'title', 'description', 'location', 'date'],
+        },
+      ],
+      order: [[{ model: Schedule, as: 'schedule' }, 'date', 'DESC']],
+    });
+
+    return res.json(registrations);
   }
 }
 
