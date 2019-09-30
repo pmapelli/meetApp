@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import Schedule from '../models/Schedule';
-import { startOfHour, parseISO, isBefore, isAfter } from 'date-fns';
+import { startOfHour, parseISO, isBefore } from 'date-fns';
 import User from '../models/User';
 import File from '../models/File';
 
@@ -67,7 +67,7 @@ class ScheduleController {
         'description',
         'location',
       ],
-      limit: 20,
+      limit: 10,
       offset: (page - 1) * 20,
       order: ['date'],
       include: [

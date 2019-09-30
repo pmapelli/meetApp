@@ -8,8 +8,6 @@ class RegistrationMail {
   async handle({ data }) {
     const { registrationMail, count } = data;
 
-    console.log(process.env.REDIS_PORT);
-
     await Mail.sendMail({
       to: `${registrationMail.schedule.user.name} <${registrationMail.schedule.user.email}>`,
       subject: 'Novo inscrito Meetup',

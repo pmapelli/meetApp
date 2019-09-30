@@ -8,6 +8,7 @@ import SessionController from './app/controllers/SessionController';
 import ScheduleController from './app/controllers/ScheduleController';
 import RegistrationController from './app/controllers/RegistrationController';
 import NotificationController from './app/controllers/NotificationController';
+import MeetupController from './app/controllers/MeetupController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -32,5 +33,7 @@ routes.post('/registrations/:id', RegistrationController.store);
 
 routes.get('/notifications/:id', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
+
+routes.get('/meetups', MeetupController.index);
 
 export default routes;

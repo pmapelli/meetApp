@@ -93,6 +93,8 @@ class RegistrationController {
       where: { schedule_id: req.params.id },
     });
 
+    console.log(quantityRegistrations.count);
+
     await Queue.add(RegistrationMail.key, {
       registrationMail,
       count: quantityRegistrations.count,
